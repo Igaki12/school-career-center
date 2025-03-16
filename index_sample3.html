@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スクールキャリアセンター</title>
+  <style>
+    /* 基本リセットと温かみのある背景、及び日本語フォントの指定 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', 'ヒラギノ角ゴ ProN', 'メイリオ', sans-serif;
+      background-color: #fff8f0; /* 温かみのある淡い背景色 */
+      color: #333;
+    }
+    /* ヘッダー */
+    header {
+      background-color: #f4a261; /* オレンジ系で温かい印象 */
+      color: white;
+      padding: 15px;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    /* ハンバーガーアイコン */
+    .hamburger {
+      width: 30px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: white;
+      margin: 5px 0;
+      border-radius: 2px;
+    }
+    /* メインコンテンツ */
+    main {
+      padding: 20px;
+      margin-bottom: 80px; /* フッター分の余白 */
+    }
+    section {
+      background: white;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    section h2 {
+      margin-top: 0;
+      color: #e76f51;
+    }
+    /* フォームリンク・入力 */
+    .form-link {
+      display: inline-block;
+      margin: 10px 0;
+      color: #2a9d8f;
+      text-decoration: none;
+    }
+    .form-link:hover {
+      text-decoration: underline;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    /* ボタン */
+    button {
+      background-color: #e76f51;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #d65a3e;
+    }
+    /* 進路条件確認のレイアウト */
+    .confirmation-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .confirmation-box {
+      flex: 1;
+      background-color: #fefae0;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .confirmation-box h3 {
+      margin-top: 0;
+      color: #264653;
+    }
+    .status {
+      font-weight: bold;
+      color: #e76f51;
+    }
+    /* 発行部分 */
+    #issueSurvey p {
+      font-size: 1.1em;
+    }
+    .hidden {
+      display: none;
+    }
+    /* フッター */
+    footer {
+      background-color: #f4a261;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    footer button {
+      background-color: transparent;
+      border: 1px solid white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    footer button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: row;
+      }
+      .confirmation-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>スクールキャリアセンター</h1>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. 生徒の進路調査票提出 -->
+    <section id="submission">
+      <h2>生徒の進路調査票提出</h2>
+      <p>以下のリンクをクリックして調査票に記入し、確認通知を受け取るためにメールアドレスを入力してください。</p>
+      <a href="https://forms.example.com" target="_blank" class="form-link">調査票フォームへ</a>
+      <div class="form-group">
+        <label for="studentEmail">メールアドレス:</label>
+        <input type="email" id="studentEmail" placeholder="example@domain.com">
+      </div>
+      <button id="submitSurvey">提出する</button>
+    </section>
+
+    <!-- 2. 進路条件の確認（担任/指導部） -->
+    <section id="confirmation">
+      <h2>進路条件の確認</h2>
+      <div class="confirmation-container">
+        <div class="confirmation-box">
+          <h3>担任の確認</h3>
+          <p class="status" id="teacherStatus">保留中</p>
+        </div>
+        <div class="confirmation-box">
+          <h3>指導部の確認</h3>
+          <p class="status" id="guidanceStatus">保留中</p>
+        </div>
+      </div>
+      <button id="confirmConditions">条件を確認する</button>
+    </section>
+
+    <!-- 3. 生徒費用支払い -->
+    <section id="payment">
+      <h2>生徒費用支払い</h2>
+      <p>事務部が費用の受け取りを担当しています。</p>
+      <p class="status" id="paymentStatus">支払い待ち</p>
+      <button id="markPayment">支払い完了にする</button>
+    </section>
+
+    <!-- 4. 担任による調査票発行 -->
+    <section id="issueSurvey">
+      <h2>調査票の発行（担任）</h2>
+      <p id="issueStatus">現時点では調査票を発行できません。</p>
+      <div id="issueDetails" class="hidden">
+        <label for="receiveDate">発行可能な場合、いつ受け取れるかを選択してください：</label>
+        <input type="date" id="receiveDate">
+      </div>
+      <button id="issueButton">調査票を発行する</button>
+    </section>
+  </main>
+
+  <footer>
+    <button id="contactUs">お問い合わせ</button>
+    <p>&copy;2025 happyman All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const submitSurveyBtn = document.getElementById('submitSurvey');
+      const studentEmailInput = document.getElementById('studentEmail');
+      const teacherStatus = document.getElementById('teacherStatus');
+      const guidanceStatus = document.getElementById('guidanceStatus');
+      const confirmConditionsBtn = document.getElementById('confirmConditions');
+      const paymentStatus = document.getElementById('paymentStatus');
+      const markPaymentBtn = document.getElementById('markPayment');
+      const issueStatus = document.getElementById('issueStatus');
+      const issueDetails = document.getElementById('issueDetails');
+      const issueButton = document.getElementById('issueButton');
+      const contactUsBtn = document.getElementById('contactUs');
+      
+      let surveySubmitted = false;
+      let conditionsConfirmed = false;
+      let paymentReceived = false;
+      
+      // 生徒の進路調査票提出処理
+      submitSurveyBtn.addEventListener('click', function() {
+        const email = studentEmailInput.value.trim();
+        if(email === ''){
+          alert("メールアドレスを入力してください。");
+          return;
+        }
+        surveySubmitted = true;
+        alert("調査票を提出しました。確認通知を " + email + " に送信します。");
+        studentEmailInput.value = '';
+      });
+      
+      // 進路条件の確認処理
+      confirmConditionsBtn.addEventListener('click', function() {
+        if(!surveySubmitted){
+          alert("まずは調査票を提出してください。");
+          return;
+        }
+        teacherStatus.textContent = "確認済み";
+        guidanceStatus.textContent = "確認済み";
+        conditionsConfirmed = true;
+        alert("担任と指導部が条件を確認しました。");
+      });
+      
+      // 生徒費用支払いの処理
+      markPaymentBtn.addEventListener('click', function() {
+        paymentStatus.textContent = "支払い済み";
+        paymentReceived = true;
+        alert("支払いが完了しました。");
+      });
+      
+      // 調査票発行処理
+      issueButton.addEventListener('click', function() {
+        if(conditionsConfirmed && paymentReceived) {
+          issueStatus.textContent = "調査票を発行できます。";
+          issueDetails.classList.remove('hidden');
+        } else {
+          alert("条件が整っていません。調査票の提出、条件確認、支払いを完了してください。");
+        }
+      });
+      
+      // お問い合わせボタン
+      contactUsBtn.addEventListener('click', function() {
+        alert("お問い合わせは support@example.com までお願いします。");
+      });
+    });
+  </script>
+</body>
+</html>
